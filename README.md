@@ -17,7 +17,7 @@ A reader-first digital library with a warm dark-academia visual identity. The pr
 1. *Foundations of Aotearoa New Zealand Law 2026* — Law / Legal Studies
 2. *Become a Pro Trader in USDJPY* — Finance / Economics
 
-The seed PDFs are currently included in the prototype archive. They are not yet committed to this repository; they will be added to the book catalogue/storage after the initial application code is established.
+The seed PDFs are preserved as separate files for upload. They are not yet committed to this repository; add them to `public/library/` when you are ready to publish them. See `docs/SEED_BOOKS.md` for the exact filenames.
 
 ## Technology baseline
 
@@ -27,13 +27,17 @@ The seed PDFs are currently included in the prototype archive. They are not yet 
 - Vercel deployment (planned)
 - PDF.js / EPUB.js reader integrations (planned)
 
+## Live preview
+
+[https://rlslibrary.vercel.app](https://rlslibrary.vercel.app)
+
 ## Current status
 
 This repository is the **starting prototype**, not a production-ready library. The current UI uses local static metadata and browser navigation to PDF assets. Authentication, database persistence, secure owner tools, EPUB rendering, annotations, and synchronized progress are not implemented yet.
 
 ## Local development
 
-Requires Node.js 20+.
+Use Node.js 22 LTS for local development.
 
 ```bash
 npm install
@@ -45,9 +49,10 @@ Open http://localhost:3000.
 Available scripts:
 
 - `npm run dev` — start the development server
+- `npm run lint` — run ESLint
+- `npm run typecheck` — run TypeScript checks
 - `npm run build` — create a production build
 - `npm run start` — run the production build
-- `npm run lint` — run ESLint
 
 ## Security and publication model
 
