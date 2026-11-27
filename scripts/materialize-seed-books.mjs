@@ -37,11 +37,33 @@ function readSeedText(prefix) {
     throw new Error(`No encoded seed parts found for ${prefix}`);
   }
 
-  const encoded = parts.map((name) => fs.readFileSync(path.join(seedDir, name), "utf8").trim()).join("");
+  const encodedParts = parts.map((name) => fs.readFileSync(path.join(seedDir, name), "utf8").trim());
+  const encoded = encodedParts.join("");
   const compressed = Buffer.from(encoded, "base64");
   try {
     return gunzipSync(compressed).toString("utf8");
   } catch (error) {
+    // A manually split Base64 chunk may contain two accidentally inserted
+    // characters. Search only the malformed-length chunks and accept a
+    // candidate only when the complete gzip checksum validates.
+    if (error?.code === "Z_BUF_ERROR" || String(error.message).includes("unexpected end of file")) {
+      for (let partIndex = 0; partIndex < encodedParts.length; partIndex += 1) {
+        const part = encodedParts[partIndex];
+        if (part.length % 4 !== 2) continue;
+        for (let position = 0; position <= part.length - 2; position += 1) {
+          const repairedParts = [...encodedParts];
+          repairedParts[partIndex] = part.slice(0, position) + part.slice(position + 2);
+          try {
+            const recovered = gunzipSync(Buffer.from(repairedParts.join(""), "base64")).toString("utf8");
+            console.warn(`Repaired two inserted Base64 characters in ${prefix} (chunk ${partIndex}).`);
+            return recovered;
+          } catch {
+            // Keep looking; only a checksum-valid gzip archive is accepted.
+          }
+        }
+      }
+    }
+
     // Some seed chunks may carry a damaged gzip trailer even when the
     // compressed DEFLATE payload is intact. In that narrow case, decode
     // the payload without validating the trailer checksum.
