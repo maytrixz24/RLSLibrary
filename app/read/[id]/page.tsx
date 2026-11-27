@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import booksData from "../../../data/books.json";
@@ -35,7 +36,7 @@ export default async function ReadBookPage({
     <main className="reader-shell">
       <header className="reader-topbar">
         <Link href="/" className="reader-brand">
-          <img src="/logo.svg" alt="RLSlibrary" width="230" height="45" />
+          <Image src="/logo.svg" alt="RLSlibrary" width={230} height={45} priority />
         </Link>
         <Link href="/" className="reader-back">← Back to bookshelf</Link>
       </header>
