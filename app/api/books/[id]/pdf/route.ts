@@ -40,6 +40,24 @@ async function fetchGutenbergText(id: number): Promise<string> {
   throw new Error(`Project Gutenberg text is temporarily unavailable (last status ${lastStatus}).`);
 }
 
+function normalizePdfText(value: string): string {
+  return value
+    .replace(/\r/g, "")
+    .replace(/\f/g, "\n\n")
+    .replace(/\u0000/g, "")
+    .replace(/[\uF0B7\u2022\u25AA\u25CF\u25E6\u00B7]/g, "-")
+    .replace(/[\u2192\u2794]/g, "->")
+    .replace(/\u2026/g, "...")
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/[\u2013\u2014\u2011]/g, "-")
+    .replace(/\u00A0/g, " ")
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .replace(/[\u0001-\u0008\u000B\u000E-\u001F\u007F-\u009F]/g, "")
+    .replace(/[^\u0009\u000A\u000D\u0020-\u007E\u00A0-\u00FF]/g, "");
+}
+
 function makePdf(source: { title: string; author: string; ebookId: number }, body: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
     const pdf = new PDFDocument({
@@ -74,7 +92,7 @@ function makePdf(source: { title: string; author: string; ebookId: number }, bod
 
     pdf.addPage();
     pdf.fillColor("#1f2420").font("Times-Roman").fontSize(9.5)
-      .text(body.replace(/\r/g, "").replace(/\u0000/g, "").replace(/\f/g, "\n\n"), {
+      .text(normalizePdfText(body), {
         width: pdf.page.width - 116,
         align: "left",
         lineGap: 2
