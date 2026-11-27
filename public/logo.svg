@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 76" role="img" aria-labelledby="title desc">
+  <title id="title">RLSlibrary</title>
+  <desc id="desc">Open book emblem with the RLSlibrary wordmark and Read. Learn. Smart. tagline.</desc>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0c98f"/>
+      <stop offset="1" stop-color="#ae8a4f"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(3 5)">
+    <rect x="1" y="1" width="64" height="64" rx="17" fill="#1d2b22" stroke="url(#gold)" stroke-width="1.7"/>
+    <path d="M33 22c-8-6-16-6-24-3v29c9-3 16-2 24 4 8-6 15-7 24-4V19c-8-3-16-3-24 3Z" fill="none" stroke="#e7dcbf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M33 22v30M15 26c5-.7 10 .2 14 2.6M51 26c-5-.7-10 .2-14 2.6" fill="none" stroke="#c6a76d" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M20 57h26" stroke="#c6a76d" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="m33 9 1.8 4.2L39 15l-4.2 1.8L33 21l-1.8-4.2L27 15l4.2-1.8L33 9Z" fill="url(#gold)"/>
+  </g>
+  <text x="82" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="32" font-weight="bold" fill="#f0e8d9" letter-spacing="-.8">RLS</text>
+  <text x="145" y="41" font-family="Georgia, 'Times New Roman', serif" font-size="32" fill="#c0a36a" letter-spacing="-.8">library</text>
+  <text x="84" y="59" font-family="Arial, Helvetica, sans-serif" font-size="8.5" fill="#a8aa9f" letter-spacing="2.8">READ. LEARN. SMART.</text>
+</svg>
