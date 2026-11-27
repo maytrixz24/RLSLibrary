@@ -109,7 +109,7 @@ function normalizeText(value) {
     // Latin characters (including Māori macrons) to readable ASCII and
     // remove any remaining glyphs the standard font cannot map safely.
     .normalize("NFKD")
-    .replace(/\\p{M}/gu, "")
+    .replace(/\p{M}/gu, "")
     .replace(/[\u0001-\u0008\u000B\u000E-\u001F\u007F-\u009F]/g, "")
     .replace(/[^\u0009\u000A\u000D\u0020-\u007E\u00A0-\u00FF]/g, "");
 }
