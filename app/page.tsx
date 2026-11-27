@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import {
   ArrowUpRight, BookOpen, CheckCircle2, ChevronDown, LibraryBig,
@@ -117,7 +118,7 @@ export default function Home() {
     <main className="shell">
       <aside className="sidebar" aria-label="Main navigation">
         <a className="brand" href="#top" aria-label="RLSlibrary home">
-          <img src="/logo.svg" alt="RLSlibrary — Read. Learn. Smart." />
+          <Image src="/logo.svg" alt="RLSlibrary — Read. Learn. Smart." width={212} height={42} priority />
         </a>
 
         <div className="side-label">LIBRARY</div>
@@ -228,7 +229,7 @@ export default function Home() {
                         <span className="rating-stars" aria-label={`${book.rating} out of 5 stars`}>★</span>
                         <strong>{book.rating.toFixed(2)}</strong>
                         <span>/ 5</span>
-                        <span className="rating-caption">{book.ratingSource}</span>
+                        <a className="rating-caption" href={book.ratingUrl} target="_blank" rel="noreferrer">{book.ratingSource}</a>
                       </>
                     ) : (
                       <span className="original-label">RLSlibrary original</span>
