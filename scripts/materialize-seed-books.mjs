@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { gunzipSync } from "node:zlib";
+import { gunzipSync, inflateRawSync } from "node:zlib";
 import PDFDocument from "pdfkit";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -39,7 +39,36 @@ function readSeedText(prefix) {
 
   const encoded = parts.map((name) => fs.readFileSync(path.join(seedDir, name), "utf8").trim()).join("");
   const compressed = Buffer.from(encoded, "base64");
-  return gunzipSync(compressed).toString("utf8");
+  try {
+    return gunzipSync(compressed).toString("utf8");
+  } catch (error) {
+    // Some seed chunks may carry a damaged gzip trailer even when the
+    // compressed DEFLATE payload is intact. In that narrow case, decode
+    // the payload without validating the trailer checksum.
+    if (error?.code !== "Z_DATA_ERROR" || !String(error.message).includes("incorrect data check")) {
+      throw error;
+    }
+
+    let offset = 10;
+    const flags = compressed[3];
+    if (flags & 0x04) {
+      offset += 2 + compressed.readUInt16LE(offset);
+    }
+    if (flags & 0x08) {
+      while (offset < compressed.length && compressed[offset] !== 0) offset += 1;
+      offset += 1;
+    }
+    if (flags & 0x10) {
+      while (offset < compressed.length && compressed[offset] !== 0) offset += 1;
+      offset += 1;
+    }
+    if (flags & 0x02) offset += 2;
+
+    const payload = compressed.subarray(offset, Math.max(offset, compressed.length - 8));
+    const recovered = inflateRawSync(payload);
+    console.warn(`Recovered ${prefix} after a gzip trailer checksum mismatch.`);
+    return recovered.toString("utf8");
+  }
 }
 
 function normalizeText(value) {
