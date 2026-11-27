@@ -14,7 +14,7 @@ const seedBooks = [
     filename: "Foundations_of_Aotearoa_New_Zealand_Law_2026.pdf",
     title: "Foundations of Aotearoa New Zealand Law 2026",
     subtitle: "A Beginner's Textbook · RLSlibrary reading copy",
-    note: "Reflowed from the owner-supplied PDF. Text was extracted and repaginated; original page design, figures and complex layouts may differ."
+    note: "Reflowed from the owner-supplied PDF. Text was extracted and repaginated; original page design, figures and complex layouts may differ. Some diacritics and special symbols are simplified to plain text for built-in font compatibility."
   },
   {
     prefix: "usdjpy-",
