@@ -2,42 +2,46 @@
 
 **Read. Learn. Smart.**
 
-A reader-first digital library with a warm dark-academia visual identity. The project starts as a small, owner-managed collection and is structured to support a public catalogue later.
+A reader-first public digital library with a warm dark-academia visual identity. The first release contains ten freely readable books across six categories.
 
-## Product direction
-
-- **Public reading catalogue:** books intentionally published by the owner can be read freely.
-- **Private owner workspace:** upload and metadata-management tools are restricted to the owner.
-- **Private reader data:** personal notes, highlights, bookmarks, and reading progress are private to the authenticated user.
-- **Bilingual UI:** English and Indonesian.
-- **Flexible organization:** categories, collections, and tags.
-
-## Initial collection
-
-1. *Foundations of Aotearoa New Zealand Law 2026* — Law / Legal Studies
-2. *Become a Pro Trader in USDJPY* — Finance / Economics
-
-The seed PDFs are preserved as separate files for upload. They are not yet committed to this repository; add them to `public/library/` when you are ready to publish them. See `docs/SEED_BOOKS.md` for the exact filenames.
-
-## Technology baseline
-
-- Next.js App Router + TypeScript
-- Tailwind CSS
-- Supabase PostgreSQL, Auth, and Storage (planned)
-- Vercel deployment (planned)
-- PDF.js / EPUB.js reader integrations (planned)
-
-## Live preview
+## Live website
 
 [https://rlslibrary.vercel.app](https://rlslibrary.vercel.app)
 
-## Current status
+## Catalogue
 
-This repository is the **starting prototype**, not a production-ready library. The current UI uses local static metadata and browser navigation to PDF assets. Authentication, database persistence, secure owner tools, EPUB rendering, annotations, and synchronized progress are not implemented yet.
+The first ten entries are:
+
+- **Education / Academic:** The Elements of Style; Meditations
+- **Finance / Economics:** Become a Pro Trader in USDJPY
+- **Law / Legal Studies:** Foundations of Aotearoa New Zealand Law 2026; The Federalist Papers
+- **Fiction / Novels:** Pride and Prejudice; Jane Eyre
+- **Science / Technology:** On the Origin of Species; Relativity: The Special and General Theory
+- **Religion:** The Dhammapada
+
+The two RLSlibrary original books are generated as lighter, reflowed PDFs from the owner-supplied source files. Their wording is extracted from the originals, but page design, diagrams, images and complex layouts may differ. The app displays this limitation in the book's rights/edition note.
+
+Several historical public-domain titles are converted into a reader-friendly PDF on demand from the cited Project Gutenberg text. The Elements of Style links to the openly reusable Geneseo PDF. Source and edition notes are displayed on each book's reader page.
+
+## Product principles
+
+- Published catalogue books can be read without an account.
+- The GitHub repository is public by choice; repository visibility is separate from website and storage permissions.
+- Owner administration, unpublished uploads and reader notes/highlights/progress must be protected when those features are implemented.
+- English and Indonesian interface copy.
+- Flexible organization by category, collections and tags.
+
+## Technology
+
+- Next.js App Router + TypeScript
+- Tailwind-inspired custom CSS
+- PDFKit for generating reader-friendly PDFs from approved public-domain text
+- Supabase PostgreSQL, Auth and Storage (planned)
+- Vercel hosting and GitHub source control
 
 ## Local development
 
-Use Node.js 22 LTS for local development.
+Use Node.js 22 LTS.
 
 ```bash
 npm install
@@ -48,33 +52,24 @@ Open http://localhost:3000.
 
 Available scripts:
 
-- `npm run dev` — start the development server
+- `npm run dev` — start development server; regenerates the two owner-supplied seed PDFs first
 - `npm run lint` — run ESLint
 - `npm run typecheck` — run TypeScript checks
-- `npm run build` — create a production build
+- `npm run build` — build for production; regenerates the seed PDFs first
 - `npm run start` — run the production build
 
-## Security and publication model
+## Copyright and source policy
 
-The GitHub repository is public by choice. That makes the **source code** publicly viewable.
+The initial selection uses historical public-domain source texts and an openly reusable PDF edition. The rights notes distinguish authorial works, translations and the particular source edition.
 
-Books in a public catalogue are intentionally readable without an account. A public PDF URL is also directly accessible to anyone who has it; it must never be used for material the owner expects to keep private.
+Indonesia's Law No. 28 of 2014 is the initial jurisdictional reference. Public-domain status in Indonesia is not an automatic guarantee for every other country. Ratings are user-generated Goodreads community snapshots, not academic endorsements. See [docs/BOOKS_AND_COPYRIGHT.md](docs/BOOKS_AND_COPYRIGHT.md).
 
-The planned application separates:
-- public book metadata and published reading files;
-- owner-only upload, edit, publish, and delete operations;
-- per-user private notes, highlights, bookmarks, and progress.
+## Security model
 
-Before implementing authentication and persistence, storage access rules and database row-level security policies must be designed and tested. Never place Supabase service-role keys or other secrets in client-side code or commit them to Git.
+The initial public catalogue is intended to be open. Owner-only uploads, unpublished/private books and personal notes must not be placed in public static assets. Database row-level security and protected storage are required before public registration or private uploads are enabled. Never commit secrets or a Supabase service-role key.
 
-## Development roadmap
-
-1. Establish the application shell, design system, and maintainable project structure.
-2. Add Supabase schema, migrations, authentication, and access policies.
-3. Implement owner-only book management and public/private publication states.
-4. Implement the PDF and EPUB reader, navigation, settings, and annotations.
-5. Add search, collections, tags, bilingual copy, and reading-progress sync.
-6. Add automated tests, security checks, accessibility and performance audits.
-7. Connect Vercel preview/production environments and document maintenance.
-
-See `docs/PRODUCT_SPEC.md` and `docs/SECURITY_MODEL.md` for the initial product and security decisions.
+See:
+- `docs/PRODUCT_SPEC.md`
+- `docs/SECURITY_MODEL.md`
+- `docs/BOOKS_AND_COPYRIGHT.md`
+- `docs/DEVELOPMENT_WORKFLOW.md`
