@@ -1,12 +1,16 @@
-# Seed Books
+# RLSlibrary seed books
 
-The following ChatGPT-created PDF books are part of the initial collection and intended for free reading in the public catalogue:
+Two ChatGPT-created books supplied by the owner are included in the first catalogue:
 
-| Book | File name | Category |
+| Book | Category | Deployed PDF |
 |---|---|---|
-| Foundations of Aotearoa New Zealand Law 2026 | `Foundations_of_Aotearoa_New_Zealand_Law_2026.pdf` | Law & Legal Studies |
-| Become a Pro Trader in USDJPY | `Become_a_Pro_Trader_in_USDJPY.pdf` | Finance / Economics |
+| Foundations of Aotearoa New Zealand Law 2026 | Law / Legal Studies | `/library/Foundations_of_Aotearoa_New_Zealand_Law_2026.pdf` |
+| Become a Pro Trader in USDJPY | Finance / Economics | `/library/Become_a_Pro_Trader_in_USDJPY.pdf` |
 
-The original PDF files were preserved outside the GitHub repository during initial source setup. Add them to `public/library/` only because these particular copies are intended to be public. Then set their paths in `data/books.json`.
+## File preparation
 
-For the Supabase implementation, migrate published books to the `published-books` bucket and store their storage keys in the database instead of hard-coded local paths.
+The original PDFs were extracted as text, compressed into source assets in `seed-assets/`, and converted into lightweight PDFs during `predev` and `prebuild` using `scripts/materialize-seed-books.mjs`.
+
+This approach preserves the extracted wording but **does not preserve the original page layout, images, charts, diagrams, or complex tables perfectly**. The generated PDF's first page explains this. The original files remain available in the owner's ChatGPT Library; use exact original binary files instead if visual fidelity is required for a later release.
+
+The resulting deployed files are public catalogue assets because the owner explicitly intends these two works to be freely readable. Do not use this mechanism for unpublished or private books.
