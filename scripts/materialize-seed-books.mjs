@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { gunzipSync } from "node:zlib";
-import { PDFDocument } from "pdfkit";
+import PDFDocument from "pdfkit";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const seedDir = path.join(root, "seed-assets");
